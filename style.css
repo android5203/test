@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.animateDiv{
+    width: 500px;
+    height: 400px;
+    border: 1px solid rgb(42, 0, 82);
+    border-radius: 10px;
+    margin: 50px auto;
+    position: relative;
+}
+.itemDiv {
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+    background-color: rgb(42, 0, 82);
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    animation: move 5s linear infinite ;
+}
+
+ 
+@keyframes move{
+ 
+    0% {
+        top: -7px;
+        left: -7px;
+    }   
+    
+    25% {
+        top: -7px;
+        left: 493px;
+    }
+
+    50% {
+        top: 393px;
+        left: 493px;
+    }
+
+    75% {
+        top: 393px;
+        left: -7px;
+    }
+
+    100%{
+        top: -7px;
+        left: -7px;
+    }
+}
+     
