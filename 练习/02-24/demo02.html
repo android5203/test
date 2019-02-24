@@ -9,34 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <style>
-    .wraper {
-        background: rgb(0, 46, 131);
-        line-height: 160px;
-    }
-
-    .font {
-        color: #fff;
-        font-size: 24px;
-        text-align: center;
-    }
+span{
+    padding: 0 20px;
+}
 </style>
-
 <body>
 
     <div id="app">
 
-
-        <div v-bind:class="[
-        'wraper', 
-        {
-            font: true
-        }
-        ]">
-            v-bind:class 绑定对象
+        <div v-for="item in 9">
+            <span v-for="j in item">
+                {{item}} * {{j}} = {{item * j}}
+            </span>
         </div>
 
     </div>
-
 
     <script>
         const vm = new Vue({
@@ -45,9 +32,8 @@
 
             }
         })
-
-
     </script>
+
 
 </body>
 

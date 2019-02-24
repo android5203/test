@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .clear::after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+    .wraper {
+        width: 500px;
+        margin: 20px auto;
+    }
+
+    .list {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .list li {
+        list-style: none;
+        float: left;
+        line-height: 50px;
+        background-color: rgb(50, 50, 129);
+        padding: 0 20px;
+        border-radius: 10px 10px 0 0;
+        color: #fff;
+        cursor: pointer;
+    }
+    .list .active{
+        background-color: rgb(0, 1, 88);
+    }
+
+    .item {
+        width: 500px;
+        background-color: rgb(174, 255, 174);
+        padding: 20px 10px;
+        box-sizing: border-box;
+    }
+</style>
+
+<body>
+
+    <div id="app">
+
+        <div class="wraper">
+            <ul class="list clear">
+                <li v-for="item in lists" v-on:click="select(item.id)" v-bind:class="{active: id === item.id}">
+                    {{item.title}}
+                </li>
+            </ul>
+
+            <div class="item" v-show="id === 0">
+                我是选项卡一
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic voluptas veniam cupiditate soluta id obcaecati, eveniet necessitatibus adipisci! Sed illo expedita delectus iusto vel laudantium est quos sint ducimus nemo?</p>
+            </div>
+
+            <div class="item" v-show="id === 1">
+                我是选项卡二
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus cum molestias esse quisquam odio nesciunt dolore natus laborum eum? Veritatis repellendus impedit, ipsam quam aspernatur corrupti tenetur ipsa nostrum fuga!</p>
+            </div>
+
+            <div class="item" v-show="id === 2">
+                我是选项卡三
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, perferendis distinctio! Voluptas ab, quis voluptatem ipsam illum vel vero nemo omnis, vitae quaerat nam at provident voluptates enim dolore illo.</p>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                id: 0,
+                lists: [
+                    { id: 0, title: "选项卡一" },
+                    { id: 1, title: "选项卡二" },
+                    { id: 2, title: "选项卡三" }
+                ]
+            },
+            methods: {
+                select: function (id) {
+                    this.id = id;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
