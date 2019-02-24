@@ -1,18 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+<style>
+.wrap{
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: rgb(0, 168, 65);
+    margin: 10px 0;
+}
+</style>
 <body>
 
-    <div class="animateDiv">
-        <div class="itemDiv"></div>
+    <div id="app">
+        <!-- 提供模板 -->
+
+        <!-- 插值表达式 {{}} 单向绑定 -->
+        <h1>{{title}}</h1>
+
+
+        <!-- v-model 指令 双向绑定 即可以获取变量，也可以修改变量 -->
+        <input type="text" v-model="title">
+
+        <!-- v-for 循环指令 用于循环创建模板 -->
+        <ul>
+            <li v-for="item in users">
+                <!-- 
+                    item是 users中 每一项的值，类似于 for of 
+                    for of 也是遍历出每一项的值
+                    for in 是遍历出每一项的下标
+                -->
+                <span>{{item.name}}</span>
+                <span>{{item.age}}</span>
+
+                <p v-for="child in item.children">
+                    <span>{{child.name}}</span>
+                    <span>{{child.age}}</span>
+                </p>
+            </li>
+        </ul>
+
+
+        <!-- v-show 条件渲染 - 根据条件来决定是否显示该模板的内容 -->
+        <div v-show="onOff == 0">
+            XXX
+        </div>
+        <!-- v-if 条件渲染 - 根据条件决定是否显示该模板的内容 -->
+        <div v-if="onOff == 0">
+            IF SHOW
+        </div>
+        <input type="text" v-model="onOff" />
+
+
+        <!-- v-bind -->
+        <div v-bind:class='attr'>
+             v-bind
+        </div>
+
+
+        <!-- v-on 给元素绑定事件（不是原生html的事件处理方式） -->
+        <!-- 可以加括号也可以不加括号 -->
+        <!-- 
+            如果带了括号，则不传递事件对象（event）
+            如果不带括号，则默认传递一个事件对象的参数
+            
+            如果我即要参数，又要事件对象该怎么办呢？
+            在参数中写一个 $event
+            在方法中接收一下
+         -->
+        <button v-on:click="mi(100,$event)">点我试试啊！</button>
+
+        <!-- v-text 只是单纯的文本 -->
+        <div v-text="title"></div>
+
+        <!-- v-html 可以解析html标签 -->
+        <textarea v-model="ht" cols="30" rows="10"></textarea>
+        <div v-html="ht"></div>
+
+
+        <!-- 
+            v-if 条件渲染
+            v-else-if 
+            v-else 
+         -->
+
+         <div v-bind:style="style">
+             文字
+         </div>
+
     </div>
 
 
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                // 提供数据
+                style: {
+                    background:"red",
+                    color:"#fff",
+                    padding: "30px 0"
+                },
+                ht: "",
+                title: "hello world",
+                onOff: 0,
+                attr: 'wrap',
+                users: [
+                    {
+                        name: "张三", age: 20,
+                        children: [
+                            { name: "小张三", age: 1 }
+                        ]
+                    },
+                    { name: "李四", age: 22 }
+                ]
+            },
+            methods: {
+                mi: function(a,event){
+                    console.log(a,event);
+                    
+                }
+            }
+        });
+
+
+
+    </script>
 </body>
+
 </html>
