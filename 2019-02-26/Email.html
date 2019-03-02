@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="text" v-model="val" placeholder="请输入邮箱">
+        <ul v-if="val">
+            <li v-on:click="select(item)" v-for="item in emailList">
+                {{item}}
+            </li>
+        </ul>
+
+        <div>
+            <input type="text" placeholder="添加新邮箱" v-model="addVal">
+            <button v-on:click="add(addVal)">Add Email</button>
+        </div>
+    </div>
+
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                val: "",
+                emailType: ["@qq.com", "@163.com", "@gamil.com"],
+                addVal: ""
+            },
+            methods: {
+                select: function (item) {
+                    this.val = item;
+                },
+                add(val){
+                    if(!/@/.test(val)){
+                        alert("请输入正确的邮箱格式");
+                        return;
+                    }
+                    if(val !== "") this.emailType.push(val);
+                    this.addVal = "";
+                }
+            },
+            computed: {
+                emailList() {
+                    if (/@/.test(this.val)) return [];
+
+                    const arr = [];
+                    for(let item in this.emailType){
+                        arr[item] = this.val + this.emailType[item];
+                    }
+                    return arr; 
+
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>{{getTitle}}</h1>
+        <h3>{{val}}</h3>
+        <input type="text" v-model="title">
+        <input type="text" v-model="val">
+    </div>
+
+
+
+    <script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            title: "",
+            val: ""
+        },
+        methods: {
+            // 方法也可以做计算
+            // {{getTitle()}} 这样调用函数
+            // 当实例的任意属性有任意改变时 函数都会触发
+            // getTitle (){
+            //     console.log(1);
+            // }
+        },
+        watch: {
+            // 这个选项用来监控当前实例中的成员发生变化 
+            // 监听方式是给当前实例的成员添加一个同名函数在 watch 选项里
+            // 这样就可以监听该成员的变化了
+            title: function(newVal, oldVal){
+                // newVal 被改之后的数据
+                // oldVal 被改之前的数据
+                if(/\d/g.test(newVal)){
+                    // this.title = oldVal;
+                    this.title = newVal.replace(/\d/g,'');
+                }
+                
+            }
+
+        },
+        computed:{
+            // computed计算属性 - 做计算的
+            // {{ getTitle }} - computed中访问不用加括号
+            getTitle(){
+                console.log(1);
+                
+                return  this.title = this.title + "@";
+            }
+        }
+    })
+    </script>
+
+
+</body>
+
+</html>
