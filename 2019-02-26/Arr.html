@@ -1,31 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-    
-    <!-- 
-        arr.forEach
-        arr.map
-        arr.filter
-        arr.find
-        arr.findIndex
 
-        都是需要有一个回调函数
+<body>
+
+    <!-- 
+        arr.forEach     // 单纯循环 ，没有返回值（undefined）
+        arr.map         // 用于根据一个数组生成一个新的数组和原数组长度相等（根据原数组，组合出一个新数组）
+        arr.filter      // 根据原数组的内容来过滤想要的成员
+        arr.find        // 查询找到的成员
+        arr.findIndex   // 查询找到成员的下标
+
+        都是需要有一个回调函数 function(){}
+
+        回调函数有三个参数 (value, index, arr)
+        * value: 数组中每一项的值
+        * index: 数组中每一项的下标
+        * arr: 原始数组
+
      -->
     <script>
-    var arr = [1,23,4,12,34,3333,5,6,7,111];
+        var arr = [1, 23, 4, 12, 34, 3333, 5, 6, 7, 111];
 
-    arr.forEach(function(){
+        // let a = arr.forEach(function(value, index, arr){
+        //     console.log(index+" -- "+value);
+        // })
+        // console.log(a); // => undefined
+
+
+        // let names = [{name:"张三"}, {name:"李四"}]
+        // let a = names.map(function(value, index, arr){
+        //     console.log(value);
+        //      return value.name;
+        // })
+        // console.log(a); // ["张三", "李四"]
+
+        // var names = [{ name: "张三" }, { name: "李四" }, { name: "张明" }]
+        // let a = names.filter(function(value, index, arr){
+        //     //  循环到每一项时，如果返回true, 该选项就会被保留到新数组中
+        //     //  return true;
+
+        //     // 返回姓张的
+        //     return /张/g.test(value.name)
+        // })
+        // console.log(a);
         
-    })
+        // var names = [{ name: "张三" }, { name: "李四" }, { name: "张明" }]
+        // let a = names.find(function(value, index, arr){
+        //     // 从数组里找到一个与条件匹配的成员
+        //     // return value.name === "张三"
+        //     // return /张/g.test(value.name); 
+        // });
+        // console.log(a); // {name: "张三"}
+        
+        
+        // var names = [{ name: "张三" }, { name: "李四" }, { name: "张明" }]
+        // let a = names.findIndex(function(value, index, arr){
+        //     return /张/g.test(value.name);
+        // })
+        // console.log(a); // 0
+        
 
-    
+        
+
+
     </script>
 
 </body>
+
 </html>
