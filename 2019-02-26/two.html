@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    ul,
+    li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 500px;
+    }
+
+    li {
+        line-height: 40px;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        font-size: 16px;
+        color: #999;
+    }
+
+    li.active {
+        background-color: #e4e4e4;
+    }
+
+    ul {
+        border: 1px solid #ccc;
+        border-bottom: 0;
+        border-top: 0;
+        text-indent: 10px;
+    }
+
+    input {
+        height: 40px;
+        margin: 0;
+        width: 500px;
+        border: 1px solid #ccc;
+        font-size: 18px;
+        color: #666;
+        text-indent: 10px;
+        outline: none;
+    }
+ 
+</style>
+
+<body>
+
+    <div id="app">
+        <input type="text" v-model="val" v-on:keydown.enter="enter" v-on:keydown.prevent.up="up()" v-on:keydown.prevent.down="down()">
+        <ul v-if="val">
+            <li v-bind:class="{active: index === selectIndex}" v-on:click="select(item)" v-for="(item,index) in emailList"> {{item}} </li>
+        </ul>
+
+        <input type="text" v-model="email">
+        <button @click="emailType.push(email),email=''">ADD</button>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                selectIndex: 0,
+                val: "",
+                email: "",
+                emailType: ['@qq.com', '@163.com', '@gmail.com']
+            },
+            computed: {
+                emailList() {
+                    if(/@/.test(this.val)){
+                        return [];
+                    }
+                    const arr = [];
+                    for(let index in this.emailType){
+                        arr[index] = this.val + this.emailType[index];
+                    }
+                    return arr;
+                }
+            },
+            methods: {
+                enter(){
+                    this.val = this.emailList[this.selectIndex];
+                },
+                select(item){
+                    this.val = item;
+                },
+                up (){
+                    this.selectIndex--;
+                },
+                down (){
+                    this.selectIndex++;
+                }
+            },
+            watch: {
+                selectIndex(newValue, oldValue){
+                    if( newValue < 0 ||  newValue >= this.emailList.length){
+                        this.selectIndex = oldValue
+                    }else{
+                        this.selectIndex = newValue;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

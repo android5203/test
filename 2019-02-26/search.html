@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        ul {
+            padding: 10px 100px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        span {
+            padding: 3px 8px;
+            border-radius: 50%;
+            background-color: #f40;
+            font-size: 14px;
+            color: #fff;
+        }
+    </style>
 </head>
+
 <body>
-    
-    <div id="app"></div>
+
+    <div id="app">
+
+        <input type="text" v-model="search">
+
+        <ul>
+            <li v-for="(item,index) in userList">
+                <span>{{index}}</span> - {{item}}
+            </li>
+        </ul>
+
+    </div>
 
 
     <script>
-    let vm = new Vue({
-        el: "app",
-        data: {
-
-        }
-    })
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                search: "",
+                users: [
+                    "张三",
+                    "李四",
+                    "王五",
+                    "赵六",
+                    "郭德纲",
+                    "于谦",
+                    "孙越",
+                    "岳云鹏",
+                    "吴京"
+                ]
+            },
+            computed: {
+                userList(){
+                    return this.users.filter((value, index, arr)=> {
+                        return !!~value.indexOf(this.search);
+                    });
+                }
+            }
+        })
     </script>
 
 </body>
+
 </html>

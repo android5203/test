@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+    <div id="app">
+        Select All
+        <input type="checkbox" v-model="selectAll">
+
+        <ul>
+            <li v-for="item in users">
+                <input type="checkbox" v-model="item.check">{{item.name}}
+            </li>
+        </ul>
+
+        <button type="button" v-on:click="del">Delete Selected Item</button>
+
+        <button type="button" v-on:click="rever">反选</button>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                selectAll: false,
+                users: [
+                    { name: "张三", age: 25, check: false },
+                    { name: "李四", age: 18, check: false },
+                    { name: "王五", age: 22, check: false }
+                ]
+            },
+            methods: {
+                del: function () {
+                    this.users = this.users.filter((value, index, arr) => {
+                        return !value.check
+                    })
+                },
+                rever() {
+                    this.users.forEach((value, index, arr) => { 
+                        value.check = !value.check;
+                    })
+                }
+            },
+            watch: {
+                selectAll: function (newValue, oldValue) {
+                    this.users.forEach((value, index, arr) => {
+                        value.check = newValue;
+                    })
+                }
+                
+            }
+        })
+    </script>
+
+</body>
+
+</html>
