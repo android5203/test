@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,55 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
+
 <body>
 
     <div id="app">
+        <page :num='5'></page>
 
+        <page :num='2'></page>
+
+        <a-Button color="#fff"></a-Button>
 
     </div>
 
 
     <script>
-    new Vue({
-        el: "#app",
-        data: {
-            
-        }
-    })
+
+        Vue.component("aButton",{
+            props: {
+                color: {
+                    type: String,
+                    default: 'green'
+                }
+            },
+            template: `
+            <button :style='{
+                backgroundColor: color
+            }'>按钮</button>
+            `
+        })
+
+        Vue.component('page', {
+            props: {
+                num: Number,
+            },
+            template: `
+            <div>
+                <h2>组件部分</h2>
+                <p v-for='(item,index) in num'>{{index+1}} - 组件描述 </p>
+            </div>
+            `, // 组件的模板选项
+        })
+
+        new Vue({
+            el: "#app",
+            data: {
+
+            },
+            // template: '<page />',
+        })
     </script>
 </body>
+
 </html>

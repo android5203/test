@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    .transfer {
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin: 50px auto;
+    }
+
+    .left,
+    .right {
+        /* width: 300px; */
+        flex: 2;
+        min-height: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f4f4f4;
+        padding-bottom: 20px;
+        position: relative;
+    }
+
+    .left ul,
+    .right ul {
+        padding: 0 40px;
+    }
+
+    .left li,
+    .right li {
+        line-height: 46px;
+        list-style: none;
+        font-size: 16px;
+        color: #666;
+        border-bottom: 1px solid #ccc;
+        transition: all .3s;
+    }
+
+    .left li:hover,
+    .right li:hover {
+        background-color: rgba(204, 204, 204, 0.555);
+        border-radius: 5px;
+    }
+
+    .left li input,
+    .right li input {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+    }
+
+    .middle {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .middle button {
+        width: 50%;
+        margin: 20px 25%;
+        height: 30px;
+        border: 0;
+        background-color: #e4e4e4;
+        border-radius: 5px;
+        font-size: 18px;
+        color: #666;
+        cursor: pointer;
+        outline: none;
+        transition: all .5s;
+        border: 1px solid #ccc;
+    }
+
+    .middle button:hover {
+        box-shadow: -1px -1px 3px 1px rgba(0, 0, 0, 0.205);
+    }
+    .all {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 15px;
+        height: 15px;
+        color: #fff;
+    }
+</style>
+
+<body>
+
+    <div id="app"></div>
+
+    <script>
+        Vue.component("Transfer", {
+            props: {
+                data1: Array,
+                data2: Array
+            },
+            template: `
+                <div class='transfer'>
+                    <div class='left'>
+                    <input class='all' type='checkbox' v-model='selectAll1'>
+                        <ul>
+                            <li v-for="item in arr1"> 
+                                <input type='checkbox' v-model='item.checked'/>
+                                {{item.title}} </li>
+                        </ul>
+                    </div>
+                    <div class='middle'>
+                        <button v-on:click='moveRight'> > </button>
+                        <button v-on:click='moveLeft'> < </button>
+                    </div>
+                    <div class='right'>
+                        <input class='all' type='checkbox' v-model='selectAll2'/>
+                        <ul>
+                            <li v-for="item in arr2"> 
+                                <input type='checkbox' v-model='item.checked'/>
+                                {{item.title}} </li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            data: function () {
+                return {
+                    selectAll1: false,
+                    selectAll2: false,
+                    arr1: this.data1,
+                    arr2: this.data2
+                }
+            },
+            watch: {
+                selectAll1(newValue, oldValue){
+                    this.arr1.forEach((value, index, arr)=>{
+                        value.checked = newValue
+                    })
+                },
+                selectAll2: function(newValue, oldValue){
+                    this.arr2.forEach((value, index, arr)=>{
+                        value.checked = newValue;
+                    })
+                }
+            },
+            methods: {
+                moveRight() {
+                    // 选中的
+                    const match = this.arr1.filter((value, index, arr)=>{
+                        return value.checked;
+                    })
+                    const match01 = match.map((value, index, arr)=>{
+                        return {
+                            checked: false,
+                            title: value.title
+                        }
+                    })
+                    this.arr2.push(...match01);
+                    // 剩余的
+                    const filters = this.arr1.filter((value, index, arr)=>{
+                        return !value.checked;
+                    })
+                    this.arr1 = filters;
+                    this.selectAll1 = false;
+                },
+                moveLeft() {
+                    // 选中的
+                    const match = this.arr2.filter((value, index, arr)=>{
+                        return value.checked
+                    })
+                    const match01 = match.map((value, index, arr)=>{
+                        return {
+                            checked: false,
+                            title: value.title
+                        }
+                    })
+                    this.arr1.push(...match01);
+                    // 没被选中的 - 剩余的
+                    const filters = this.arr2.filter((value, index, arr)=>{
+                        return !value.checked;
+                    })
+                    this.arr2 = filters;
+                    this.selectAll2 = false;
+                }
+            }
+        })
+        new Vue({
+            el: "#app",
+            template: `
+            <div id="app">
+                <Transfer :data1='data1' :data2='data2'></Transfer>
+            </div>
+            `,
+            data: {
+                data1: [
+                    {
+                        checked: false,
+                        title: 'value1'
+                    },
+                    {
+                        checked: false,
+                        title: 'value2'
+                    },
+                    {
+                        checked: false,
+                        title: 'value3'
+                    },
+                    {
+                        checked: false,
+                        title: 'value4'
+                    },
+                    {
+                        checked: false,
+                        title: 'value5'
+                    }
+                ],
+                data2: [
+                    {
+                        checked: false,
+                        title: 'value6'
+                    },
+                    {
+                        checked: false,
+                        title: 'value7'
+                    },
+                    {
+                        checked: false,
+                        title: 'value8'
+                    },
+                    {
+                        checked: false,
+                        title: 'value9'
+                    },
+                    {
+                        checked: false,
+                        title: 'value0'
+                    }
+                ]
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

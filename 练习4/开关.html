@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .Switcher{
+            width: 44px;
+            height: 22px;
+            border-radius: 22px;
+            background-color: #e4e4e4;
+            border: 1px solid #ccc;
+            transition: all .5s;
+        }
+        .cherItem{
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 22px;
+            transition: all .5s;
+        }
+        .Switcher.on {
+            background-color: rgb(52, 72, 255);
+            border: 1px solid rgb(52, 72, 255);
+        }
+        .Switcher.on .cherItem {
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+    </div>
+
+    <script>
+        Vue.component('Switcher', {
+            template: `
+            <div v-bind:class="['Switcher', {on: iVal}]" v-on:click="on">
+                <div class='cherItem'></div>
+            </div>
+            `,
+            data: function(){
+                return {
+                    iVal: this.val
+                }
+            },
+            props: {
+                val: Boolean
+            },
+            methods: {
+                on: function(){
+                    this.iVal = !this.iVal;
+                    this.$emit('edit',this.iVal)
+                }
+            },
+            watch: {
+                val: function(newValue, oldValue){
+                    this.iVal = newValue
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            template: `
+                <div>
+                    <Switcher :val='off' v-on:edit='edit'/>
+                    {{off}}
+                    <button v-on:click='off = !off'>Toggle</button>
+                </div>
+            `,
+            data: {
+                off: false
+            },
+            methods: {
+                edit: function(newVal){
+                    this.off = newVal;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

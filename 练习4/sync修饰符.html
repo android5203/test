@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+    </div>
+
+    <script>
+        Vue.component('Test', {
+            props: {
+                val: Number
+            },
+            data: function(){
+                return {
+                    iVal: this.val
+                }
+            },
+            template: `
+                <div class='test'>
+                    <input type='text' v-model.number='iVal' /> + 100 = {{iVal + 100}}
+                </div>
+            `,
+            watch: {
+                val (newVal, oldVal){
+                    this.iVal = newVal
+                    this.$emit('value', newVal)
+                }
+            }
+        })
+        new Vue({
+            el: "#app",
+            data: {
+                num: 100
+            },
+            methods: {},
+            template: `
+                <div>
+                    父级    
+                    {{num}}
+                    <input type='text' v-model.number="num"/>
+                    <br />
+                    子级
+                    <Test :val='num'/>
+                </div>
+            `
+        })
+    </script>
+
+</body>
+
+</html>
